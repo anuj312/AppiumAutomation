@@ -11,11 +11,12 @@ jobs:
 
     strategy:
       matrix:
-        api-level: [ 21, 23, 29 ]
-        target: [ default, google_apis ]
+        api-level: [21, 23, 29]
+        target: [default, google_apis]
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       - name: Set up JDK
         uses: actions/setup-java@v1
@@ -46,13 +47,10 @@ jobs:
       - name: Install Appium Dependencies
         run: npm install appium-doctor -g && appium-doctor
 
-      - name: Start Appium Server
-        run: appium --port 4723 --log-timestamp
+      - name: Install and Run Appium Server
+        uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4
 
-      - name: Wait for Appium Server
-        run: sleep 100
-
-      - name: run tests
+      - name: Run tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -60,4 +58,3 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           script: ./gradlew connectedCheck
-
