@@ -42,7 +42,7 @@ jobs:
       run: appium --port 4723 --log-timestamp
 
     - name: Wait for Appium Server
-      run: sleep 10  
+      run: sleep 100
 
     - name: Run Appium Tests
       run: mvn clean test
