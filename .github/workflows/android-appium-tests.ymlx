@@ -25,7 +25,7 @@ jobs:
         java-version: '11'
     
     - name: Start Emulator
-      run: emulator -avd emulator-5554 -no-audio -no-window &
+      run: emulator @Nexus5 -no-audio -no-window &
 
     - name: Install Node.js
       uses: actions/setup-node@v2
