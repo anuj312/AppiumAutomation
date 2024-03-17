@@ -42,7 +42,7 @@ jobs:
         run: npm install appium-doctor -g && appium-doctor
 
       - name: Start Appium Server
-        run: appium --port 4723 --log-timestamp
+        run: start appium -p 4723
 
       - name: Wait for Appium Server
         run: sleep 100
