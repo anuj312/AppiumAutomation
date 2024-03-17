@@ -39,8 +39,11 @@
               with:
                 node-version: '14'
 
+            - name: Install Appium Dependencies
+              run: npm install appium-doctor -g && appium-doctor
+
             - name: Install Appium
-              run: npm install -g appium@8.4.0
+              run: npm install -g appium
 
             - name: Run tests
               uses: reactivecircus/android-emulator-runner@v2
