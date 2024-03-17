@@ -27,6 +27,11 @@ jobs:
       - name: Install Emulator Driver
         run: sdkmanager "system-images;android-30;google_apis;x86_64" --sdk_root=${ANDROID_SDK_ROOT} && echo "no" | avdmanager create avd -n Nexus5 -k "system-images;android-30;google_apis;x86_64"
 
+      - name: Update PATH
+        run: |
+          echo "export ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+          echo "export PATH=$PATH:$ANDROID_SDK_ROOT/emulator" >> $GITHUB_ENV
+
       - name: Start Emulator
         run: emulator @Nexus5 -no-audio -no-window &
 
@@ -42,7 +47,7 @@ jobs:
         run: npm install appium-doctor -g && appium-doctor
 
       - name: Start Appium Server
-        run: start appium -p 4723
+        run: appium --port 4723 --log-timestamp
 
       - name: Wait for Appium Server
         run: sleep 100
