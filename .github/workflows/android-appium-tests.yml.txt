@@ -1,0 +1,48 @@
+name: Android Appium Tests
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Install Android SDK
+      uses: android-actions/setup-android@v2
+      with:
+        sdk-platform: '30'
+        ndk-version: '21.4.7075529'
+        java-version: '11'
+    
+    - name: Start Emulator
+      run: emulator -avd emulator-5554 -no-audio -no-window &
+
+    - name: Install Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+
+    - name: Install Appium
+      run: npm install -g appium
+
+    - name: Install Appium Dependencies
+      run: npm install appium-doctor -g && appium-doctor
+
+    - name: Start Appium Server
+      run: appium --port 4723 --log-timestamp
+
+    - name: Wait for Appium Server
+      run: sleep 10  
+
+    - name: Run Appium Tests
+      run: mvn clean test -Dtestng=testng.xml 
