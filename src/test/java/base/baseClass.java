@@ -30,7 +30,7 @@ public class baseClass {
     String path = "C://Appium//AppiumServer//Appium-Server-GUI-windows-1.22.3-4//resources//app//node_modules//appium//build//lib//main.js";
     String Appium_Node_Path="C://Program Files//nodejs//node.exe";
     String systemPath = System.getProperty("user.dir");
-
+//
     @BeforeClass
     public void setup() throws IOException, InterruptedException {
 
