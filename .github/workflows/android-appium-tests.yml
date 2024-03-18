@@ -30,6 +30,9 @@ jobs:
       - name: Install Appium
         run: npm install -g appium
 
+      - name: Install Appium Doctor
+        run: npm install -g appium-doctor
+
       - name: Install Android SDK
         uses: android-actions/setup-android@v2
 
@@ -40,7 +43,7 @@ jobs:
 
     steps:
       - name: Start Appium Server
-        run: appium --address 127.0.0.1 --port 4723 &
+        run: appium &
 
       - name: Launch Emulator
         run: |
