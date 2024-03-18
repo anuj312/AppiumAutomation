@@ -12,6 +12,9 @@ jobs:
   setup:
     name: Setup Environment
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [ 21, 23, 29 ]
 
     steps:
       - name: Checkout repository
