@@ -36,7 +36,7 @@ public class baseClass {
 
       /*  ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter("./test-outputs/extent-report.html");
         extent = new ExtentReports();
-        extent.attachReporter(htmlReporter);*/
+        extent.attachReporter(htmlReporter);*///
 
         appiumService = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                 .usingDriverExecutable(new File(Appium_Node_Path)).withAppiumJS(new File(path))
