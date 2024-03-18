@@ -19,6 +19,19 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: Install JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install Appium
+        run: npm install -g appium
+
       - name: Gradle cache
         uses: gradle/actions/setup-gradle@v3
 
@@ -40,6 +53,9 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: false
           script: echo "Generated AVD snapshot for caching."
+
+      - name: Start Appium Server
+        run: appium --address 127.0.0.1 --port 4723 &
 
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
