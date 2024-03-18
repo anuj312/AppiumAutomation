@@ -1,4 +1,4 @@
-name: Appium Tests
+name: Appium and Emulator
 
 on:
   push:
@@ -9,7 +9,8 @@ on:
       - main
 
 jobs:
-  test:
+  setup:
+    name: Setup Environment
     runs-on: ubuntu-latest
 
     steps:
@@ -21,15 +22,29 @@ jobs:
         with:
           java-version: '11'
 
-      - name: Cache Maven packages
-        uses: actions/cache@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          node-version: '14'
 
-      - name: Build with Maven
-        run: mvn -B clean test
+      - name: Install Appium
+        run: npm install -g appium
 
-    # Additional steps can be added for reporting test results, generating reports, etc.
+      - name: Install Android SDK
+        uses: android-actions/setup-android@v2
+
+  test:
+    name: Run Appium Tests
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Start Appium Server
+        run: appium &
+
+      - name: Launch Emulator
+        run: |
+          avdmanager create avd -n emulator -k "system-images;android-29;google_apis;x86"
+          emulator -avd emulator -no-audio -no-window &
+
+    # Add more steps to run your tests against the Appium server and emulator
